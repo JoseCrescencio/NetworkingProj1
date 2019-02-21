@@ -14,6 +14,7 @@ mini = 0.0
 maxi = 0.0
 avgRTT = 0.0
 missPercent = 0.0
+estimatedRTT = 0.0
 
 #setting server name, port number, socket and timeout of 1 second
 serverName = 'localhost'
@@ -41,7 +42,10 @@ for i in range(10):
   #ending timer, finding RTT and printing the results
   end = time.time()
   RTT = end - start
-  print "Roundtrip time: %.4f s\n" % (RTT)
+  print "Roundtrip time: %.4f s\n" % ( RTT * 1000)
+  
+  #calculating estimate RTT EstimatedRTT = (1- alpha*EstimatedRTT + alpha*SampleRTT
+  estimatedRTT = ( 1 - 0.125 ) * estimatedRTT + ( 0.125 * RTT )
   
   #calculating RTT
   avgRTT += RTT
@@ -66,7 +70,8 @@ for i in range(10):
 clientSocket.close()
 
 #print statements for the RTT statements
-print "\nMinimum RTT: %.4f s" % ( mini )
-print "Maximum RTT: %.4f s" % ( maxi )
-print "Average RTT: %.4f s" % ( avgRTT/10 )
-print "Packet loss percentage: %d%%" % ( (missPercent/10) * 100 )
+print "\nMinimum RTT: %.4f ms" % ( mini * 1000 )
+print "Maximum RTT: %.4f ms" % ( maxi * 1000 )
+print "Average RTT: %.4f ms" % ( (avgRTT / 10) * 1000 )
+print "\nEstimated RTT: %.4f ms" % (estimatedRTT * 1000)
+print "Packet loss percentage: %d%%\n" % ( (missPercent / 10) * 100 )
