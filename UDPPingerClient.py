@@ -47,10 +47,10 @@ for i in range(10):
   #calculating estimate RTT EstimatedRTT = (1- alpha*EstimatedRTT + alpha*SampleRTT
   estimatedRTT = ( 1 - 0.125 ) * estimatedRTT + ( 0.125 * RTT )
   
-  #calculating RTT
+  #adding packet's RTT to overall sum to divide by n successful packets later
   avgRTT += RTT
   
-  #setting min and max RTT to the first value on first execution
+  #setting min and max RTT to the first value for first packet sent
   if not ranOnce:
    maxi = RTT
    mini = RTT
@@ -70,8 +70,8 @@ for i in range(10):
 clientSocket.close()
 
 #print statements for the RTT statements
+print "\nEstimated RTT: %.4f ms" % (estimatedRTT * 1000)
 print "\nMinimum RTT: %.4f ms" % ( mini * 1000 )
 print "Maximum RTT: %.4f ms" % ( maxi * 1000 )
-print "Average RTT: %.4f ms" % ( (avgRTT / 10) * 1000 )
-print "\nEstimated RTT: %.4f ms" % (estimatedRTT * 1000)
+print "Average RTT: %.4f ms" % ( (avgRTT / (10 - missPercent)) * 1000 )
 print "Packet loss percentage: %d%%\n" % ( (missPercent / 10) * 100 )
