@@ -41,8 +41,8 @@ for i in range(10):
   
   #ending timer, finding RTT and printing the results
   end = time.time()
-  RTT = end - start
-  print "Roundtrip time: %.4f s\n" % ( RTT * 1000)
+  RTT = (end - start)* 1000
+  print "Roundtrip time: %.4f ms\n" % ( RTT )
   
   #calculating estimate RTT EstimatedRTT = (1- alpha*EstimatedRTT + alpha*SampleRTT
   estimatedRTT = ( 1 - 0.125 ) * estimatedRTT + ( 0.125 * RTT )
@@ -70,8 +70,8 @@ for i in range(10):
 clientSocket.close()
 
 #print statements for the RTT statements
-print "\nEstimated RTT: %.4f ms" % (estimatedRTT * 1000)
-print "\nMinimum RTT: %.4f ms" % ( mini * 1000 )
-print "Maximum RTT: %.4f ms" % ( maxi * 1000 )
-print "Average RTT: %.4f ms" % ( (avgRTT / (10 - missPercent)) * 1000 )
+print "\nEstimated RTT: %.4f ms" % (estimatedRTT)
+print "\nMinimum RTT: %.4f ms" % ( mini )
+print "Maximum RTT: %.4f ms" % ( maxi )
+print "Average RTT: %.4f ms" % ( avgRTT / (10 - missPercent) )
 print "Packet loss percentage: %d%%\n" % ( (missPercent / 10) * 100 )
